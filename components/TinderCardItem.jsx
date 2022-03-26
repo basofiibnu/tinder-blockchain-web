@@ -27,10 +27,9 @@ const TinderCardItem = ({ card }) => {
 
   const onSwipe = (dir) => {
     if (dir === 'right') {
-      //   handleRightSwipe(card, currentAccount)
+      handleRightSwipe(card, currentAccount)
     }
   }
-  console.log(card)
   return (
     <TinderCard
       className={style.tinderCardWrapper}

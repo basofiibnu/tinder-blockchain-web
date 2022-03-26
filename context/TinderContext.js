@@ -81,6 +81,53 @@ export const TinderProvider = ({ children }) => {
     }
   }
 
+  const handleRightSwipe = async (cardsData, currentUserAddress) => {
+    const likeData = {
+      likedUser: cardsData.walletAddress,
+      currentUser: currentUserAddress,
+    }
+
+    try {
+      await fetch('/api/saveLike', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(likeData),
+      })
+
+      const response = await fetch('/api/checkMatches', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(likeData),
+      })
+
+      const responseData = await response.json()
+      const isMatch = responseData.data.isMatch
+
+      if (isMatch) {
+        console.log('match')
+
+        const mintData = {
+          walletAddresses: [cardsData.walletAddress, currentUserAddress],
+          name: [cardsData, currentUser],
+        }
+
+        await fetch('/api/mintMatchNft', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(mintData),
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     checkWalletConnection()
 
@@ -98,6 +145,7 @@ export const TinderProvider = ({ children }) => {
         currentAccount,
         currentUser,
         cardData,
+        handleRightSwipe,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ const saveLike = async (req, res) => {
   try {
     await client
       .patch(req.body.currentUser)
-      .setIfMissing({ likse: [] })
+      .setIfMissing({ likes: [] })
       .insert('after', 'likes[-1]', [
         {
           _key: `${req.body.likedUser} - ${req.body.currentUser}`,

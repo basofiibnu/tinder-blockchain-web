@@ -16,7 +16,8 @@ const style = {
 }
 
 const Card = () => {
-  const { cardData } = useContext(TinderContext)
+  const { cardData, currentUser } = useContext(TinderContext)
+
   return (
     <div className={style.wrapper}>
       <CardHeader />
