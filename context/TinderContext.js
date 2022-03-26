@@ -10,15 +10,6 @@ export const TinderProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState()
   const { authenticate, isAuthenticated, user, Moralis } = useMoralis()
 
-  useEffect(() => {
-    checkWalletConnection()
-
-    if (isAuthenticated) {
-      requestUserData(user.get('ethAddress'))
-      requestCurrentUserData(user.get('ethAddress'))
-    }
-  }, [isAuthenticated])
-
   const checkWalletConnection = async () => {
     if (isAuthenticated) {
       const address = user.get('ethAddress')
@@ -42,9 +33,61 @@ export const TinderProvider = ({ children }) => {
   }
 
   const disconnectWallet = async () => {
-    await Moralis.User.LogOut()
+    await Moralis.User.logOut()
     setCurrentAccount('')
   }
+
+  const requestToCreateUserProfile = async (walletAddress, name) => {
+    try {
+      await fetch('/api/createUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userWalletAddress: walletAddress,
+          name: name,
+        }),
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const requestCurrentUserData = async (walletAddress) => {
+    try {
+      const response = await fetch(
+        `/api/fetchCurrentUser?activeAccount=${walletAddress}`
+      )
+      const data = await response.json()
+
+      setCurrentUser(data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const requestUserData = async (activeAccount) => {
+    try {
+      const response = await fetch(
+        `/api/fetchAllUser?activeAccount=${activeAccount}`
+      )
+      const data = await response.json()
+
+      setCardData(data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    checkWalletConnection()
+
+    if (isAuthenticated) {
+      requestUserData(user.get('ethAddress'))
+      requestCurrentUserData(user.get('ethAddress'))
+    }
+  }, [isAuthenticated])
 
   return (
     <TinderContext.Provider

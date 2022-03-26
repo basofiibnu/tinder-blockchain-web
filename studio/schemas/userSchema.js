@@ -6,30 +6,23 @@ export const userSchema = {
     {
       name: 'name',
       title: 'Name',
-      type: 'string,',
+      type: 'string',
     },
     {
       name: 'walletAddress',
       title: 'Wallet Address',
-      type: 'string,',
+      type: 'string',
     },
     {
       name: 'profileImage',
       title: 'Profile Image',
-      type: 'string,',
+      type: 'string',
     },
     {
       name: 'likes',
-      title: 'Likes',
       type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: {
-            type: 'users',
-          },
-        },
-      ],
+      title: 'Likes',
+      of: [{ type: 'reference', to: { type: 'users' } }],
     },
   ],
 }
