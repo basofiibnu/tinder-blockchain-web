@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
 import Image from 'next/image'
-// import { TinderContext } from '../context/TinderContext'
 import fire from '../assets/fire.png'
+import { useContext } from 'react'
+import { TinderContext } from '../context/TinderContext'
 
 const style = {
   wrapper: `h-24 py-11 text-white flex w-screen items-center px-16 justify-between`,
@@ -16,19 +16,19 @@ const style = {
 }
 
 const Header = () => {
-  //   const { connectWallet, currentAccount, disconnectWallet } =
-  //     useContext(TinderContext)
+  const { connectWallet, currentAccount, disconnectWallet } =
+    useContext(TinderContext)
 
   return (
     <div
-      className={`${style.wrapper}${
-        'bg-gray-900'
-        // currentAccount ? 'bg-gray-900' : 'fixed bg-transparent'
+      className={`${style.wrapper} ${
+        currentAccount ? 'bg-gray-900' : 'bg-transparent'
       }`}
     >
       <div className={style.main}>
         <Image src={fire} alt="fire" height={45} width={45} />
         <h1 className={style.tinderText}>tinder</h1>
+
         <div className={style.leftMenu}>
           <div className={style.menuItem}>Products</div>
           <div className={style.menuItem}>Learn</div>
@@ -36,10 +36,10 @@ const Header = () => {
           <div className={style.menuItem}>Support</div>
           <div className={style.menuItem}>Download</div>
         </div>
-
-        <div className={style.rightMenu}>
-          <div>English</div>
-          {/* {currentAccount ? (
+      </div>
+      <div className={style.rightMenu}>
+        <div>ENGLISH</div>
+        {currentAccount ? (
           <>
             <div className={style.currentAccount}>
               <Image
@@ -65,8 +65,7 @@ const Header = () => {
           <button className={style.authButton} onClick={() => connectWallet()}>
             Login
           </button>
-        )} */}
-        </div>
+        )}
       </div>
     </div>
   )

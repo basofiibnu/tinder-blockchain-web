@@ -5,8 +5,8 @@ import Header from '../components/Header'
 import Card from '../components/Card'
 
 const style = {
-  wrapper: `h-screen w-screen flex flex-col bg-[#222229]`,
-  cardsContainer: `flex flex-col items-center justify-center flex-1`,
+  wrapper: `h-full w-full flex flex-col bg-[#222229]`,
+  cardsContainer: `flex flex-col items-center justify-center flex-1 mt-5`,
 }
 
 const Home = () => {
