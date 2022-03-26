@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState, useContext } from 'react'
-// import { TinderContext } from '../context/TinderContext'
+import React, { useState, useContext } from 'react'
 import { FaUndoAlt } from 'react-icons/fa'
 import { AiOutlineClose } from 'react-icons/ai'
 import { AiFillStar } from 'react-icons/ai'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import TinderCard from 'react-tinder-card'
+import { TinderContext } from '../context/TinderContext'
 
 const style = {
   tinderCardWrapper: `w-full h-full absolute`,
@@ -23,15 +22,15 @@ const style = {
   lightningColors: `border-purple-500 text-purple-500`,
 }
 
-const TinderCardItem = () => {
-  // const { handleRightSwipe, currentAccount } = useContext(TinderContext)
+const TinderCardItem = ({ card }) => {
+  const { handleRightSwipe, currentAccount } = useContext(TinderContext)
 
   const onSwipe = (dir) => {
     if (dir === 'right') {
       //   handleRightSwipe(card, currentAccount)
     }
   }
-
+  console.log(card)
   return (
     <TinderCard
       className={style.tinderCardWrapper}
@@ -40,18 +39,18 @@ const TinderCardItem = () => {
     >
       <div
         className={style.wrapper}
-        //    style={{ backgroundImage: `url('${card.imageUrl}')` }}
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1644982647844-5ee1bdc5b114?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80')`,
-        }}
+        style={{ backgroundImage: `url('${card.imageUrl}')` }}
       >
         <div className={style.space}>
           <div className={style.name}>
-            Kyo
-            <span className={style.age}>999</span>
+            {card.name}
+            <span className={style.age}>{card.age && card.age}</span>
           </div>
         </div>
-        <div className={style.walletAddress}>0x...47k</div>
+        <div className={style.walletAddress}>{`${card.walletAddress.slice(
+          0,
+          4
+        )}...${card.walletAddress.slice(38)}`}</div>
         <div className={style.reactionsContainer}>
           <div className={`${style.backColors} ${style.buttonContainer}`}>
             <FaUndoAlt

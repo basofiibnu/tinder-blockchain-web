@@ -8,7 +8,8 @@ export const TinderProvider = ({ children }) => {
   const [cardData, setCardData] = useState([])
   const [currentAccount, setCurrentAccount] = useState()
   const [currentUser, setCurrentUser] = useState()
-  const { authenticate, isAuthenticated, user, Moralis } = useMoralis()
+  const { authenticate, isAuthenticated, isAuthUndefined, user, Moralis } =
+    useMoralis()
 
   const checkWalletConnection = async () => {
     if (isAuthenticated) {
@@ -21,7 +22,7 @@ export const TinderProvider = ({ children }) => {
   }
 
   const connectWallet = async () => {
-    if (!isAuthenticated) {
+    if (!isAuthUndefined) {
       try {
         await authenticate({
           signingMessage: 'Log in using Moralis',
@@ -96,6 +97,7 @@ export const TinderProvider = ({ children }) => {
         disconnectWallet,
         currentAccount,
         currentUser,
+        cardData,
       }}
     >
       {children}

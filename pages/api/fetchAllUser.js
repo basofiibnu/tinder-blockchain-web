@@ -9,7 +9,7 @@ const getAllUserInfo = async (req, res) => {
         }`
 
     const response = await client.fetch(query)
-    res.status(200).send({ message: 'success', data: response[0] })
+    res.status(200).send({ message: 'success', data: response })
   } catch (error) {
     res.status(500).send({ message: 'error', data: error })
   }
